@@ -48,9 +48,14 @@ class FakeTextDataGenerator(object):
         background.paste(rotated_img, (5, 5), mask=mask)
 
         # Create the name for our image
-        image_name = '{}.{}'.format(str(index), extension)
+        tmp = '00000000' + str(index)
+        image_name = 'showa_{}.{}'.format(tmp[-6:], extension)
 
-        with open('file.txt', 'a') as file:
+        with open('src-train.txt', 'a') as file:
+            file.write(image_name)
+            file.write('\n')
+
+        with open('tgt-train.txt', 'a') as file:
             file.write(text)
             file.write('\n') 
  
