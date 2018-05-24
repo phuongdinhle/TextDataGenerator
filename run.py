@@ -4,6 +4,7 @@ import os, errno
 import random
 import re
 import requests
+import numpy as np
 
 from bs4 import BeautifulSoup
 from PIL import Image, ImageFont
@@ -195,12 +196,20 @@ def create_strings_from_dict(length, allow_variable, count, lang_dict):
         Create all strings by picking X random word in the dictionnary
     """
 
+    vocab = list('0123456789`!#$%^&*().-[]<>/|\?')
+    
     dict_len = len(lang_dict)
     strings = []
     for _ in range(0, count):
         current_string = ""
         for _ in range(0, random.randint(1, length) if allow_variable else length):
             current_string += lang_dict[random.randrange(dict_len)][:-1]
+            n_chars = np.random.randint(0, 10)
+            n_choise = random.choice([True, False])
+            if n_choise == True:
+                current_string += ' '
+                for i in range(n_chars):
+                    current_string += np.random.choice(vocab)
             current_string += ' '
         strings.append(current_string[:-1])
     return strings
